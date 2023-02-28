@@ -59,7 +59,29 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown',function(e){
+    //console.log(e);
+    //console.log(e.keyCode);
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); //Buscamos el audio con la misma key del teclado
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); //Buscamos el div con el mismo key del teclado(PAra aplicar el efecto)
+    //console.log(audio);
+    if(!audio)return; //Detiene la funcion si no se teclea la letras de opciones
+    audio.currentTime = 0; //Reinicia si se esta reproduciendo, esto da fluides
+    audio.play();
 
+    key.classList.add('playing'); //Agregamos el efecto al div
+  });
+
+  //metodo para quitar el efecto al div
+  function removeTransition(e){
+    if(e.propertyName !== 'transform') return;//Regresa si no es una de as teclas
+    console.log(e.propertyName);
+    console.log(this);
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend',removeTransition) );
 </script>
 
 
