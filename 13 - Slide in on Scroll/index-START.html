@@ -59,6 +59,29 @@
       };
     }
 
+    const SliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide(e){
+      console.log(e);
+      console.log(window.scrollY);
+      SliderImages.forEach(SliderImage =>{
+        //Half way through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - SliderImage.height /2;
+        console.log(slideInAt);//how far down we are
+        //Botton of the image
+        const imageBotton = SliderImage.offsetTop + SliderImage.height;
+
+        const isHalfShow = slideInAt > SliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBotton;
+        if(isHalfShow && isNotScrolledPast){
+          SliderImage.classList.add('active');
+        }else{
+          SliderImage.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll',debounce(checkSlide));
+
   </script>
 
   <style>
